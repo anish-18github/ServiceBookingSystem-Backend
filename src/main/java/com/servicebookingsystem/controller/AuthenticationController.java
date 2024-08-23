@@ -78,6 +78,7 @@ public class AuthenticationController {
 		return new ResponseEntity<>(createUser, HttpStatus.OK);
 	}
 	
+	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping({"/authenticate"})
 	public void createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) throws IOException, JSONException {
 		

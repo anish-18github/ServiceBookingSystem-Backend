@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ public class CompanyController {
 	@Autowired
 	private CompanyService companyService;
 	
+	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping("/ad/{userId}")
 	public ResponseEntity<?> postAd(@PathVariable Long userId, @ModelAttribute AdDTO adDTO) throws IOException{
 		boolean success = companyService.postAd(userId, adDTO);
@@ -29,5 +31,7 @@ public class CompanyController {
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
+		
+
 	}
 }
