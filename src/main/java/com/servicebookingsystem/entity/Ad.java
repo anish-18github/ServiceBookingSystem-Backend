@@ -149,7 +149,7 @@ public class Ad {
 
 
 
-	public AdDTO getAdDTO() {
+	public AdDTO getAdDto() {
 		AdDTO adDTO = new AdDTO();
 		
 		adDTO.setId(id);
