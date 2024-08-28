@@ -22,20 +22,48 @@ public class CompanyController {
 
 	@Autowired
 	private CompanyService companyService;
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+
+	@CrossOrigin(origins = "http://localhost:4200") // Consider moving this to a global config
 	@PostMapping("/ad/{userId}")
-	public ResponseEntity<?> postAd(@PathVariable Long userId, @ModelAttribute AdDTO adDTO) throws IOException{
-		boolean success = companyService.postAd(userId, adDTO);
-		if (success) {
-			return ResponseEntity.status(HttpStatus.OK).build();
-		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	public ResponseEntity<?> postAd(@PathVariable Long userId, @ModelAttribute AdDTO adDTO) {
+		try {
+			boolean success = companyService.postAd(userId, adDTO);
+			if (success) {
+				return ResponseEntity.status(HttpStatus.OK).build();
+			} else {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Consider a different status for failed save
+			}
+		} catch (IOException e) {
+			// Log the exception for debugging
+			System.err.println("Error while posting ad: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing the ad");
 		}
 	}
-	
+
+	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/ads/{userId}")
-	public ResponseEntity<?> getAllAdsByUserId(@PathVariable Long userId){
-		return ResponseEntity.ok(companyService.getAllAds(userId));
+	public ResponseEntity<?> getAllAdsByUserId(@PathVariable Long userId) {
+		try {
+			return ResponseEntity.ok(companyService.getAllAds(userId));
+		} catch (Exception e) {
+			// Handle any unexpected errors
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to fetch ads");
+		}
+	}
+
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping("/ad/{adId}")
+	public ResponseEntity<?> getAdById(@PathVariable Long adId) {
+		try {
+			AdDTO adDTO = companyService.getAdById(adId);
+			if (adDTO != null) {
+				return ResponseEntity.ok(adDTO);
+			} else {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ad not found");
+			}
+		} catch (Exception e) {
+			// Handle unexpected errors
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to fetch the ad");
+		}
 	}
 }

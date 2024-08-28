@@ -49,4 +49,12 @@ public class CompanyServiceImpl implements CompanyService{
 	public List<AdDTO> getAllAds(Long userId){
 		return adRepository.findAllByUserId(userId).stream().map(Ad::getAdDto).collect(Collectors.toList());
 	}
+	
+	public AdDTO getAdById(Long adId) {
+		Optional<Ad> optionalAd = adRepository.findById(adId);
+		if (optionalAd.isPresent()) {
+			return optionalAd.get().getAdDto();
+		}
+		return null;
+	}
 }
