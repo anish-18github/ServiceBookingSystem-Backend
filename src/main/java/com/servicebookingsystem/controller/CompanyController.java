@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,7 +32,8 @@ public class CompanyController {
 			if (success) {
 				return ResponseEntity.status(HttpStatus.OK).build();
 			} else {
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Consider a different status for failed save
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Consider a different status for failed
+																			// save
 			}
 		} catch (IOException e) {
 			// Log the exception for debugging
@@ -65,5 +67,16 @@ public class CompanyController {
 			// Handle unexpected errors
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to fetch the ad");
 		}
+	}
+
+	@PutMapping("/ad/{adId}")
+	public ResponseEntity<?> updateAd(@PathVariable Long adId, @ModelAttribute AdDTO adDTO) throws IOException {
+		boolean success = companyService.updateAd(adId, adDTO);
+		if (success) {
+			return ResponseEntity.status(HttpStatus.OK).build();
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+
 	}
 }
