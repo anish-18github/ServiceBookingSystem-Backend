@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.servicebookingsystem.dto.AdDTO;
+import com.servicebookingsystem.dto.AdDetailsForClientDTO;
 import com.servicebookingsystem.dto.ReservationDTO;
 import com.servicebookingsystem.entity.Ad;
 import com.servicebookingsystem.entity.Reservation;
@@ -58,5 +59,16 @@ public class ClientServiceImpl implements ClientService{
 			return true;
 		}
 		return false;
+	}
+	
+	public AdDetailsForClientDTO getAdDetailsByAdId(Long adId) {
+		Optional<Ad> optionalAd = adRepository.findById(adId);
+		AdDetailsForClientDTO adDetailsForClientDTO = new AdDetailsForClientDTO();
+		
+		if (optionalAd.isPresent()) {
+			adDetailsForClientDTO.setAdDTO(optionalAd.get().getAdDto());
+			
+		}
+		return adDetailsForClientDTO;
 	}
 }

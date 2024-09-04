@@ -20,12 +20,13 @@ import com.servicebookingsystem.services.company.CompanyService;
 
 @RestController
 @RequestMapping("/api/company")
+@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "Authorization") // Consider moving this to a global config
 public class CompanyController {
 
 	@Autowired
 	private CompanyService companyService;
 
-	@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "Authorization") // Consider moving this to a global config
+	
 	@PostMapping("/ad/{userId}")
 	public ResponseEntity<?> postAd(@PathVariable Long userId, @ModelAttribute AdDTO adDTO) {
 		try {
@@ -43,7 +44,7 @@ public class CompanyController {
 		}
 	}
  
-	@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "Authorization")
+	
 	@GetMapping("/ads/{userId}")
 	public ResponseEntity<?> getAllAdsByUserId(@PathVariable Long userId) {
 		try {
@@ -54,7 +55,7 @@ public class CompanyController {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "Authorization")
+	
 	@GetMapping("/ad/{adId}")
 	public ResponseEntity<?> getAdById(@PathVariable Long adId) {
 		try {
@@ -70,7 +71,7 @@ public class CompanyController {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "Authorization")
+	
 	@PutMapping("/ad/{adId}")
 	public ResponseEntity<?> updateAd(@PathVariable Long adId, @ModelAttribute AdDTO adDTO) throws IOException {
 		boolean success = companyService.updateAd(adId, adDTO);
@@ -81,7 +82,7 @@ public class CompanyController {
 		}
 	}
 	
-	@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "Authorization")
+	
 	@DeleteMapping("/ad/{adId}")
 	public ResponseEntity<?> deleteAd(@PathVariable Long adId){
 		boolean success = companyService.deleteAd(adId);

@@ -16,24 +16,26 @@ import com.servicebookingsystem.services.client.ClientService;
 
 @RestController
 @RequestMapping("/api/client")
+@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "Authorization")
 public class ClientController {
 	
 	@Autowired
 	private ClientService clientService;
 	
-	@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "Authorization")
+//	To see all Ads 
 	@GetMapping("/ads")
 	public ResponseEntity<?> getAllAds(){
 		return ResponseEntity.ok(clientService.getAllAds());
 	}
 
-	@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "Authorization")
+//	Controller To find Ad by Ad Title
 	@GetMapping("/search/{name}")
 	public ResponseEntity<?> searchAdByService(@PathVariable String name){
 		return ResponseEntity.ok(clientService.searchAdByName(name));
 	}
 	
-	@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "Authorization")
+	
+	
 	@PostMapping("/book-service")
 	public ResponseEntity<?> bookService(@RequestBody ReservationDTO reservationDTO){
 		boolean success = clientService.bookService(reservationDTO);
@@ -44,5 +46,11 @@ public class ClientController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
 		}
+	}
+	
+
+	@GetMapping("/ad/{adId}")
+	public ResponseEntity<?>getAdDetailsByAdId(@PathVariable Long adId){
+		return ResponseEntity.ok(clientService.getAdDetailsByAdId(adId));
 	}
 }
