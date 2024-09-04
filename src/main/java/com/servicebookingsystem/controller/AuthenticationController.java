@@ -53,7 +53,8 @@ public class AuthenticationController {
 
 	
 	
-	@CrossOrigin(origins = "http://localhost:4200")
+//	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "Authorization")
 	@PostMapping("/client/sign-up")
 	public ResponseEntity<?> signupClient(@RequestBody SignupRequestDTO signupRequestDTO) {
 
@@ -66,7 +67,7 @@ public class AuthenticationController {
 		return new ResponseEntity<>(createUser, HttpStatus.OK);
 	}
 
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "Authorization")
 	@PostMapping("/company/sign-up")
 	public ResponseEntity<?> signupCompany(@RequestBody SignupRequestDTO signupRequestDTO) {
 		if (authService.presentByEmail(signupRequestDTO.getEmail())) {
@@ -78,7 +79,7 @@ public class AuthenticationController {
 		return new ResponseEntity<>(createUser, HttpStatus.OK);
 	}
 	
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "Authorization")
 	@PostMapping({"/authenticate"})
 	public void createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) throws IOException, JSONException {
 		
@@ -95,7 +96,7 @@ public class AuthenticationController {
 		User user = userRepository.findFirstByEmail(authenticationRequest.getUsername());
 		
 		response.getWriter().write(new JSONObject()
-//				.put("token", jwt)
+				.put("token", jwt)
 				.put("userId", user.getId())
 				.put("role", user.getRole())
 				.toString()
