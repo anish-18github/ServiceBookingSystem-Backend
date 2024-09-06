@@ -9,9 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.servicebookingsystem.dto.AdDTO;
+import com.servicebookingsystem.dto.ReservationDTO;
 import com.servicebookingsystem.entity.Ad;
+import com.servicebookingsystem.entity.Reservation;
 import com.servicebookingsystem.entity.User;
 import com.servicebookingsystem.repository.AdRepository;
+import com.servicebookingsystem.repository.ReservationRepository;
 import com.servicebookingsystem.repository.UserRepository;
 
 @Service
@@ -22,6 +25,9 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Autowired
 	private AdRepository adRepository;
+
+	@Autowired
+	private ReservationRepository reservationRepository;
 
 	public boolean postAd(Long userId, AdDTO adDTO) throws IOException {
 		Optional<User> optionalUser = userRepository.findById(userId);
@@ -81,5 +87,10 @@ public class CompanyServiceImpl implements CompanyService {
 			return true;
 		}
 		return false;
+	}
+
+	public List<ReservationDTO> getAllAdBookings(Long companyId) {
+		return reservationRepository.findAllByCompanyId(companyId).stream().map(Reservation::getReservationDto)
+				.collect(Collectors.toList());
 	}
 }
