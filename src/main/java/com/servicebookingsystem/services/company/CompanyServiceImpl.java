@@ -2,6 +2,7 @@ package com.servicebookingsystem.services.company;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,7 @@ import com.servicebookingsystem.dto.ReservationDTO;
 import com.servicebookingsystem.entity.Ad;
 import com.servicebookingsystem.entity.Reservation;
 import com.servicebookingsystem.entity.User;
+import com.servicebookingsystem.enums.ReservationStatus;
 import com.servicebookingsystem.repository.AdRepository;
 import com.servicebookingsystem.repository.ReservationRepository;
 import com.servicebookingsystem.repository.UserRepository;
@@ -92,5 +94,23 @@ public class CompanyServiceImpl implements CompanyService {
 	public List<ReservationDTO> getAllAdBookings(Long companyId) {
 		return reservationRepository.findAllByCompanyId(companyId).stream().map(Reservation::getReservationDto)
 				.collect(Collectors.toList());
+	}
+	
+	public boolean changeBookingStatus(Long bookingId, String status) {
+		Optional<Reservation> optionalReservation = reservationRepository.findById(bookingId);
+		if (optionalReservation.isPresent()) {
+			Reservation existingReservation = optionalReservation.get();
+			if (Objects.equals(status, "Approve")) {
+				
+				existingReservation.setReservationStatus(ReservationStatus.APPROVED);
+			} else {
+				
+				existingReservation.setReservationStatus(ReservationStatus.REJECTED);
+			}	
+			
+			reservationRepository.save(existingReservation);
+			return true;
+		}
+		return false;
 	}
 }

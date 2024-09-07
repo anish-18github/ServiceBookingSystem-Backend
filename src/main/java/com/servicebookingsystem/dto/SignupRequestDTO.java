@@ -1,5 +1,10 @@
 package com.servicebookingsystem.dto;
 
+import com.servicebookingsystem.enums.UserRole;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
 //import lombok.Data;
 
 
@@ -18,6 +23,9 @@ public class SignupRequestDTO {
 	private String address;
 
 	private String phone;
+	
+//	@Enumerated(EnumType.STRING)
+//	private UserRole role;
 
 	public Long getId() {
 		return id;
@@ -74,6 +82,45 @@ public class SignupRequestDTO {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	
+//	public UserRole getRole() {
+//		return role;
+//	}
+//
+//	public void setRole(UserRole role) {
+//		this.role = role;
+//	}
+
+	/**
+	 * @param id
+	 * @param email
+	 * @param password
+	 * @param name
+	 * @param lastname
+	 * @param address
+	 * @param phone
+	 * @param role
+	 */
+	public SignupRequestDTO(Long id, String email, String password, String name, String lastname, String address,
+			String phone, UserRole role) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.lastname = lastname;
+		this.address = address;
+		this.phone = phone;
+//		this.role = role;
+	}
+
+	/**
+	 * 
+	 */
+	public SignupRequestDTO() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 	
 
