@@ -2,8 +2,8 @@ package com.servicebookingsystem.dto;
 
 import com.servicebookingsystem.enums.UserRole;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+//import jakarta.persistence.EnumType;
+//import jakarta.persistence.Enumerated;
 
 //import lombok.Data;
 
