@@ -7,6 +7,8 @@ import java.util.Date;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.servicebookingsystem.dto.ReviewDTO;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -14,10 +16,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.Data;
+//import lombok.Data;
 
 @Entity
-@Data
+//@Data
 public class Review {
 
 	@Id
@@ -113,5 +115,20 @@ public class Review {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
+	public ReviewDTO getDto() {
+		ReviewDTO reviewDTO = new ReviewDTO();
+		
+		reviewDTO.setId(id);
+		reviewDTO.setReview(review);
+		reviewDTO.setRating(rating);
+		reviewDTO.setReviewDate(reviewDate);
+		reviewDTO.setUserId(user.getId());
+		reviewDTO.setClientName(user.getName());
+		reviewDTO.setAdId(ad.getId());
+		reviewDTO.setServiceName(ad.getServiceName());
+		
+		return reviewDTO;
+		
+	}
 }

@@ -63,9 +63,9 @@ public class ClientController {
 	
 	
 	@PostMapping("/review")
-	public ResponseEntity<?> giveReview(@RequestBody ReviewDTO ReviewDTO){
-		
-		Boolean success = clientService.giveReview(ReviewDTO);
+	public ResponseEntity<?> giveReview(@RequestBody ReviewDTO reviewDTO){
+		 
+		Boolean success = clientService.giveReview(reviewDTO);
 		if (success) {
 			
 			return ResponseEntity.status(HttpStatus.OK).build();

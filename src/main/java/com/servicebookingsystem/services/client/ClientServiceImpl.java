@@ -69,17 +69,21 @@ public class ClientServiceImpl implements ClientService {
 		return false;
 	}
 
+	
 	public AdDetailsForClientDTO getAdDetailsByAdId(Long adId) {
 		Optional<Ad> optionalAd = adRepository.findById(adId);
 		AdDetailsForClientDTO adDetailsForClientDTO = new AdDetailsForClientDTO();
 
 		if (optionalAd.isPresent()) {
 			adDetailsForClientDTO.setAdDTO(optionalAd.get().getAdDto());
-
+			
+			List<Review> reviewList = reviewRepository.findAllByAdId(adId);
+			adDetailsForClientDTO.setReviewDTOList(reviewList.stream().map(Review::getDto).collect(Collectors.toList()));
 		}
 		return adDetailsForClientDTO;
 	}
 
+	
 	public List<ReservationDTO> getAllBookingsByUserId(Long userId) {
 		return reservationRepository.findAllByUserId(userId).stream().map(Reservation::getReservationDto)
 				.collect(Collectors.toList());

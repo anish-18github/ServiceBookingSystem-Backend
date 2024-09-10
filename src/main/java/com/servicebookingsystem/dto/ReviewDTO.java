@@ -2,9 +2,9 @@ package com.servicebookingsystem.dto;
 
 import java.util.Date;
 
-import lombok.Data;
+//import lombok.Data;
 
-@Data
+//@Data
 public class ReviewDTO {
 
 private Long id;
@@ -95,5 +95,38 @@ private Long id;
 
 	public void setBookId(Long bookId) {
 		this.bookId = bookId;
+	}
+
+	/**
+	 * @param id
+	 * @param reviewDate
+	 * @param review
+	 * @param rating
+	 * @param userId
+	 * @param adId
+	 * @param clientName
+	 * @param serviceName
+	 * @param bookId
+	 */
+	public ReviewDTO(Long id, Date reviewDate, String review, Long rating, Long userId, Long adId, String clientName,
+			String serviceName, Long bookId) {
+		super();
+		this.id = id;
+		this.reviewDate = reviewDate;
+		this.review = review;
+		this.rating = rating;
+		this.userId = userId;
+		this.adId = adId;
+		this.clientName = clientName;
+		this.serviceName = serviceName;
+		this.bookId = bookId;
+	}
+
+	/**
+	 * 
+	 */
+	public ReviewDTO() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 }
