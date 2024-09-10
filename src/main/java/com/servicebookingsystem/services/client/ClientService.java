@@ -5,6 +5,7 @@ import java.util.List;
 import com.servicebookingsystem.dto.AdDTO;
 import com.servicebookingsystem.dto.AdDetailsForClientDTO;
 import com.servicebookingsystem.dto.ReservationDTO;
+import com.servicebookingsystem.dto.ReviewDTO;
 
 public interface ClientService {
 
@@ -17,4 +18,7 @@ public interface ClientService {
 	 AdDetailsForClientDTO getAdDetailsByAdId(Long adId);
 	 
 	 List<ReservationDTO> getAllBookingsByUserId(Long userId);
+	 
+	 Boolean giveReview(ReviewDTO reviewDTO);
+	 
 }

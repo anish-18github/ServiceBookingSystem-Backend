@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.servicebookingsystem.dto.ReservationDTO;
+import com.servicebookingsystem.dto.ReviewDTO;
 import com.servicebookingsystem.services.client.ClientService;
 
 @RestController
@@ -58,5 +59,19 @@ public class ClientController {
 	@GetMapping("/my-bookings/{userId}")
 	public ResponseEntity<?> getAllBookingsByUserId(@PathVariable Long userId){
 		return ResponseEntity.ok(clientService.getAllBookingsByUserId(userId));
+	}
+	
+	
+	@PostMapping("/review")
+	public ResponseEntity<?> giveReview(@RequestBody ReviewDTO ReviewDTO){
+		
+		Boolean success = clientService.giveReview(ReviewDTO);
+		if (success) {
+			
+			return ResponseEntity.status(HttpStatus.OK).build();
+		} else {
+			
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
 	}
 }

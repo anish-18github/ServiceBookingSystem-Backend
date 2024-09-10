@@ -1,5 +1,6 @@
 package com.servicebookingsystem.services.client;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -10,13 +11,16 @@ import org.springframework.stereotype.Service;
 import com.servicebookingsystem.dto.AdDTO;
 import com.servicebookingsystem.dto.AdDetailsForClientDTO;
 import com.servicebookingsystem.dto.ReservationDTO;
+import com.servicebookingsystem.dto.ReviewDTO;
 import com.servicebookingsystem.entity.Ad;
 import com.servicebookingsystem.entity.Reservation;
+import com.servicebookingsystem.entity.Review;
 import com.servicebookingsystem.entity.User;
 import com.servicebookingsystem.enums.ReservationStatus;
 import com.servicebookingsystem.enums.ReviewStatus;
 import com.servicebookingsystem.repository.AdRepository;
 import com.servicebookingsystem.repository.ReservationRepository;
+import com.servicebookingsystem.repository.ReviewRepository;
 import com.servicebookingsystem.repository.UserRepository;
 
 @Service
@@ -30,6 +34,10 @@ public class ClientServiceImpl implements ClientService {
 
 	@Autowired
 	private ReservationRepository reservationRepository;
+	
+	@Autowired
+	private ReviewRepository reviewRepository; 
+	
 
 	public List<AdDTO> getAllAds() {
 		return adRepository.findAll().stream().map(Ad::getAdDto).collect(Collectors.toList());
@@ -75,5 +83,33 @@ public class ClientServiceImpl implements ClientService {
 	public List<ReservationDTO> getAllBookingsByUserId(Long userId) {
 		return reservationRepository.findAllByUserId(userId).stream().map(Reservation::getReservationDto)
 				.collect(Collectors.toList());
+	}
+	
+	
+	public Boolean giveReview(ReviewDTO reviewDTO) {
+		
+		Optional<User> optionalUser = userRepository.findById(reviewDTO.getUserId());
+		Optional<Reservation> optionalBooking = reservationRepository.findById(reviewDTO.getBookId());
+		
+		if (optionalUser.isPresent() && optionalBooking.isPresent()) {
+			Review review = new Review();
+			
+			review.setReviewDate(new Date());
+			review.setReview(reviewDTO.getReview());
+			review.setRating(reviewDTO.getRating());
+			
+			review.setUser(optionalUser.get());
+			review.setAd(optionalBooking.get().getAd());
+			
+			reviewRepository.save(review);
+			
+			Reservation booking = optionalBooking.get();
+			booking.setReviewStatus(ReviewStatus.TRUE);
+			
+			reservationRepository.save(booking);
+			
+			return true;
+		}
+		return false;
 	}
 }

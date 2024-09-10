@@ -4,6 +4,8 @@ import com.servicebookingsystem.dto.UserDto;
 import com.servicebookingsystem.enums.UserRole;
 
 import jakarta.persistence.Entity;
+//import jakarta.persistence.EnumType;
+//import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,6 +32,7 @@ public class User {
 
 	private String phone;
 
+//	@Enumerated(EnumType.STRING)
 	private UserRole role;
 
 	public Long getId() {
