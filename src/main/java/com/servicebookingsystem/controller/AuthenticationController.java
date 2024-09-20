@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,9 +29,12 @@ import com.servicebookingsystem.utill.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "Authorization")
+@CrossOrigin(origins = "${FRONTEND_URL}", exposedHeaders = "Authorization")
 public class AuthenticationController {
 
+	@Value("${FRONTEND_URL}")
+    private String frontendUrl;
+	
 	@Autowired
 	private AuthService authService;
 

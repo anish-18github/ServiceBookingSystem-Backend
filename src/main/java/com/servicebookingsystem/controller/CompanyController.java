@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,8 +23,11 @@ import com.servicebookingsystem.services.company.CompanyService;
 
 @RestController
 @RequestMapping("/api/company")
-@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "Authorization") // Consider moving this to a global config
+@CrossOrigin(origins = "${FRONTEND_URL}", exposedHeaders = "Authorization") // Consider moving this to a global config
 public class CompanyController {
+	
+	@Value("${FRONTEND_URL}")
+    private String frontendUrl;
 
 	@Autowired
 	private CompanyService companyService;

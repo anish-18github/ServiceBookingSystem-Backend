@@ -1,6 +1,7 @@
 package com.servicebookingsystem.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,8 +18,12 @@ import com.servicebookingsystem.services.client.ClientService;
 
 @RestController
 @RequestMapping("/api/client")
-@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "Authorization")
+@CrossOrigin(origins = "${FRONTEND_URL}", exposedHeaders = "Authorization")
 public class ClientController {
+	
+	@Value("${FRONTEND_URL}")
+    private String frontendUrl;
+	
 	
 	@Autowired
 	private ClientService clientService;
